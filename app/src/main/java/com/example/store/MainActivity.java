@@ -50,5 +50,45 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnLogin.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
+    }
+    public void login(){
+        StringRequest request = new StringRequest(Request.Method.POST, "http://localhost/LOGIN_STORE.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("1")) {
+                            Toast.makeText(getApplicationContext(),
+                                    "¡Usuario correcto, Bienvenido!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), Menu.class));
+                        }else {
+                            Toast.makeText(getApplicationContext(),
+                                    "¡Usuario y/o contraseña incorrecto!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }){
+            //With the StringRequest method, the URL of the login part is extracted, where
+            //stored the database for this section
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("username", mUserName.getText().toString());
+                params.put("password", mPassword.getText().toString());
+                return params;
+            }
+        };
+
+        Volley.newRequestQueue(this).add(request);
     }
 }
