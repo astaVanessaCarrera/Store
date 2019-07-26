@@ -21,6 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
     //region VARIABLES
     private EditText mPassword, mUserName;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
     Button btnLogin, btnSign;
+
     //endregion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +65,46 @@ public class MainActivity extends AppCompatActivity {
                 login();
             }
         });
+
+        //region LOGIN FACEBOOK
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButton = findViewById(R.id.loginButton);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                goMainScreen();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), R.string.cancel_login, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
+            }
+        });
+        //endregion
     }
+
+    //region METODO LOGIN FACEBOOK
+    private void goMainScreen() {
+        Intent intent = new Intent(this, Menu.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //endregion
     public void login(){
-        StringRequest request = new StringRequest(Request.Method.POST, "http://localhost/LOGIN_STORE.php",
+        StringRequest request = new StringRequest(Request.Method.POST, "http://192.168.1.42/LOGIN_RECIPE.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

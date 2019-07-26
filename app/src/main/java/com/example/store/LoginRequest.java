@@ -10,7 +10,7 @@ import java.util.Map;
 //variables and the URL of the Login where the data is stored
 public class LoginRequest extends StringRequest {
     //region VARIABLES
-    private static final String LOGIN_REQUEST_URL = "http://localhost/LOGIN_STORE.php";
+    private static final String LOGIN_REQUEST_URL = "http://192.168.1.42/LOGIN_RECIPE.php";
     private Map<String, String> params;
     //endregion
 

@@ -9,7 +9,7 @@ import java.util.Map;
 public class RegisterRequest extends StringRequest {
 
     //region VARIABLES
-    private static final String REGISTER_REQUEST_URL = "http://localhost/REGISTER_STORE.php";
+    private static final String REGISTER_REQUEST_URL = "http://localhost/REGISTER_RECIPE.php";
     private Map<String, String> params;
     //endregion
 

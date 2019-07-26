@@ -142,20 +142,6 @@
                     android:text="Sign up"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnSign"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/capsule"
-                    android:drawableLeft="@drawable/ic_square_facebook"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Register with Facebook"
-                    android:textColor="@color/purple" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
